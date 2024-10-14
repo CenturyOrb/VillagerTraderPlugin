@@ -1,0 +1,7 @@
+name: VillagerTraderPlugin
+version: '1.0-SNAPSHOT'
+main: com.matthew.villagerTraderPlugin.VillagerTraderPlugin
+api-version: '1.20'
+commands:
+  spawntrader:
+
