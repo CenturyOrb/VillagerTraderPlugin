@@ -1,12 +1,8 @@
 package com.matthew.villagerTraderPlugin;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -15,34 +11,30 @@ import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.annotation.Command;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpawnTrader implements CommandExecutor {
+public class SpawnTrader {
 
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    @Command("spawntrader")
+    public void spawnTrader(Player player) {
 
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-            Location loc = player.getLocation();
-            Villager trader = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
-            trader.setCustomName(ChatColor.AQUA + "SpecialTrader");
-            trader.setCustomNameVisible(true);
-            trader.setAI(false);
-            // Save UUID to TraderStorage
-            player.sendMessage("Special Trader Spawned!");
-            List<MerchantRecipe> trades = new ArrayList<>();
-            // Create the trade: 1 Ender Dragon Egg for 1 Special Potion
-            MerchantRecipe trade = new MerchantRecipe(createSpecialPotion(), 9999); // Max uses of trade
-            trade.addIngredient(new ItemStack(Material.DRAGON_EGG)); // The required item (Ender Dragon Egg)
-            trades.add(trade);
-            // Open the trade window for the player
-            trader.setRecipes(trades);
-        }
-        return false;
+        Location loc = player.getLocation();
+        Villager trader = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
+        trader.setCustomName(ChatColor.AQUA + "SpecialTrader");
+        trader.setCustomNameVisible(true);
+        trader.setAI(false);
+        // Save UUID to TraderStorage
+        player.sendMessage("Special Trader Spawned!");
+        List<MerchantRecipe> trades = new ArrayList<>();
+        // Create the trade: 1 Ender Dragon Egg for 1 Special Potion
+        MerchantRecipe trade = new MerchantRecipe(createSpecialPotion(), 9999); // Max uses of trade
+        trade.addIngredient(new ItemStack(Material.DRAGON_EGG)); // The required item (Ender Dragon Egg)
+        trades.add(trade);
+        // Open the trade window for the player
+        trader.setRecipes(trades);
     }
 
     public ItemStack createSpecialPotion() {
